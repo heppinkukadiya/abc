@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  product_id                  Int     @id @default(autoincrement())
+  prod_type                   String
+  name                        String
+  stock                       Int
+  price                       Int
+  discount                    Int
+  final_price                 Int
+  image                       String
+  video                       String
+  certi_image                 String
+  shape                       String
+  carat                       String
+  cut                         String
+  polish                      String
+  symmetry                    String
+  girdle_min                  String
+  girdle_max                  String
+  Girdle_condition            String
+  Pavilion_depth              String
+  Pavilion_angle              String
+  Hearts_arrows               String
+  Eye_clean                   String
+  type                        String
+  Depth_percent               String
+  Table_percent               String
+  Ratio                       String
+  Meas_length                 String
+  Meas_width                  String
+  Meas_depth                  String
+  Pair                        String
+  Culet_carat                 String
+  Culet_condition             String
+  Crown_height                String
+  Crown_angle                 String
+  BGM                         String
+  Color                       String
+  Fancy_color_dominant_color  String
+  Fancy_color_overtone        String
+  Clarity                     String
+  Fancy_color_secondary_color String
+  Fancy_color_intensity       String
+  Fluor_color                 String
+  Fluor_intensity             String
+  lab                         String
+  certification               String
+  Order                       Order[]
+}
+
+model User {
+  user_id      Int      @id @default(autoincrement())
+  first_name   String
+  last_name    String
+  company_name String
+  email        String   @unique
+  mobileNo     String   @unique
+  mobileCode   String
+  address      String
+  city         String
+  state        String
+  country      String
+  pincode      String
+  gstin        String?
+  createdAt    DateTime @default(now())
+  Orders       Order[]
+}
+
+model Order {
+  order_id     Int      @id @default(autoincrement())
+  user_id      Int
+  user         User     @relation(fields: [user_id], references: [user_id])
+  product_id   Int
+  product      Product  @relation(fields: [product_id], references: [product_id])
+  payment_type String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Otp {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  otp        String
+  otpExpires DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
