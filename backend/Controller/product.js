@@ -64,7 +64,6 @@ exports.addProduct = async (req, res) => {
         const uploads = [];
 
 
-        // Handle uploaded files
         for (const file of req.files) {
             const filePath = path.join(__dirname, "../uploads", file.filename);
             const fileBody = fs.readFileSync(filePath);
@@ -131,7 +130,6 @@ exports.deleteProduct = async (req, res) => {
     }
 
     try {
-        // Optional: Check if product exists first
         const product = await prisma.product.findUnique({
             where: { Product_Id: Number(id) },
         });
@@ -149,9 +147,7 @@ exports.deleteProduct = async (req, res) => {
     } catch (error) {
         console.error('Delete product error:', error);
 
-        // Check if error is due to foreign key constraint violation
         if (error.code === 'P2003') {
-            // Prisma foreign key constraint error code
             return res.status(409).json({
                 error: 'Cannot delete product because it is referenced by other records (e.g. orders).',
             });

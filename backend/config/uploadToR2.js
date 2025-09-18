@@ -1,4 +1,3 @@
-// uploadToR2.js
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 require("dotenv").config();
 
